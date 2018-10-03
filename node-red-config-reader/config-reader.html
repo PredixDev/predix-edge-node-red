@@ -1,0 +1,38 @@
+<script type="text/javascript">
+    RED.nodes.registerType('config-reader',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+          name: {value:"test"},
+          filename: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"config-reader";
+        }
+        // oneditprepare: function() {
+        //     console.log(this);
+        //     alert('here6');
+        //     alert(JSON.parse(this));
+        //
+        //     if (this.property === undefined) {
+        //         $("#node-input-property").val("payload");
+        //     }
+        //     $("#node-input-property").typedInput({default:'msg',types:['msg']});
+        // }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="config-reader">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+        <input type="text" id="node-input-filename" placeholder="Filename">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="config-reader">
+    <p>A simple node that converts the message payloads into all config-reader characters</p>
+</script>

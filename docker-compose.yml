@@ -1,0 +1,15 @@
+version: "3.0"
+
+services:
+  edge-node-red:
+    image: "edge-node-red:latest"
+    volumes:
+      - ./:/data
+      - ./config:/config
+    networks:
+      - predix-edge-broker_net
+    ports:
+      - 1880:1880
+networks:
+  predix-edge-broker_net:
+    external: true

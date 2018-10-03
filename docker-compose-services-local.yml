@@ -1,0 +1,28 @@
+version: "3.0"
+
+services:
+  opcua:
+    image: "dtr.predix.io/predix-edge/protocol-adapter-opcua-amd64:latest"
+    environment:
+      config: "/config/config-opcua.json"
+    volumes:
+      - ./config:/config
+      - ./data:/data
+    networks:
+      - predix-edge-broker_net
+  cloud_gateway_timeseries:
+    image: "dtr.predix.io/predix-edge/cloud-gateway-timeseries-amd64:latest"
+    environment:
+      config: "/config/config-cloud-gateway.json"
+      https_proxy: "http://proxy-src.research.ge.com:8080"
+    dns:
+      - "10.220.220.220"
+    volumes:
+      - ./config:/config
+      - ./data:/data
+      - ./data:/edge-agent
+    networks:
+      - predix-edge-broker_net
+networks:
+  predix-edge-broker_net:
+    external: true
