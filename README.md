@@ -58,4 +58,63 @@ docker start predix-edge-node-red
 docker exec -it predix-edge-node-red /bin/bash
 ```
 
+
+## Bulding and Pushing the docker image to Docker Hub
+The Jenkinsfile contains a section to build, test and deploy docker images to docker hub.
+
+Docker needs to be launched in the predixadpotion/prediximage docker image which is in turn running in Propel's Docker container. This is because this predixadoption/prediximage is run within a top-level docker container by propel. So we need to pass in some args during the docker run to make sure the docker daemon is configured for the a specific volume in the current docker container even though the daemon is running one level higher in the propel's docker container (Docker in Docker).
+
+These args in the agent need to be passed during running the docker command initially
+```
+agent {
+    docker {
+      image 'predixadoption/devrelprediximage:latest'
+      label 'dind'
+      args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+```
+
+Once the docker is running with our new volume chnages, we can build the predix-edge-node-red image and then push that image to Docker Hub.
+
+
+```
+docker build --no-cache -t predixadoption/predix-edge-node-red:latest -f Dockerfile .
+docker login -u ${DOCKER_REGISTRY_CREDS_USR} -p ${DOCKER_REGISTRY_CREDS_PSW}
+docker push predixadoption/predix-edge-node-red:latest
+```
+
+## Labels for Docker images
+
+A set of labels are defined in the Dockerfile as shown below - 
+
+```
+FROM nodered/node-red-docker:slim-v8
+
+LABEL "vendor"="Predix Builder Relations"
+LABEL "group"="com.ge.predix.solsvc"
+LABEL "org"="predixadoption"
+LABEL version="1.0.0"
+
+#example of how to add more node-red nodes
+#RUN npm install node-red-node-wordpos
+```
+
+Each of the four labels defined in the Dockerfile help the user get information about the docker image that is being built. These labels can also be inspected when a docker image is pulled from docker hub or DTR.
+
+In order to inspect a Docker label from a Docker image we run the following command 
+
+The Generic command is as follows:
+```
+docker inspect -f '{{index .ContainerConfig.Labels "$LABEL_NAME"}}' $Docker_Image:$Tag
+```
+
+The Specific inspect commands for this Dockerfile are as follows:
+```
+docker inspect -f '{{index .ContainerConfig.Labels "vendor"}}' predixadoption/predix-edge-node-red:latest
+docker inspect -f '{{index .ContainerConfig.Labels "group"}}' predixadoption/predix-edge-node-red:latest
+docker inspect -f '{{index .ContainerConfig.Labels "org"}}' predixadoption/predix-edge-node-red:latest
+docker inspect -f '{{index .ContainerConfig.Labels "version"}}' predixadoption/predix-edge-node-red:latest
+```
+
+
 [![Analytics](https://ga-beacon.appspot.com/UA-82773213-1/predix-rmd-ref-app/readme?pixel)](https://github.com/PredixDev)
