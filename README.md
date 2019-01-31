@@ -5,13 +5,13 @@ see https://nodered.org/docs/platforms/docker
 ## Build new container using Dockerfile
 Can include other nodes from npm this way.
 ```
-docker build -t predix-edge-node-red:<tag> .       //where tag is latest or a version
+docker build -t predixadoption/predix-edge-node-red:<tag> .       //where tag is latest or a version
 ```
 
 or
 
 ```
-docker build --build-arg HTTP_PROXY --build-arg HTTPS_PROXY -t predix-edge-node-red:latest .
+docker build --build-arg HTTP_PROXY --build-arg HTTPS_PROXY -t predixadoption/predix-edge-node-red:latest .
 ```
 
 ## Run container
@@ -85,7 +85,7 @@ docker push predixadoption/predix-edge-node-red:latest
 
 ## Labels for Docker images
 
-A set of labels are defined in the Dockerfile as shown below - 
+A set of labels are defined in the Dockerfile as shown below -
 
 ```
 FROM nodered/node-red-docker:slim-v8
@@ -101,7 +101,7 @@ LABEL version="1.0.0"
 
 Each of the four labels defined in the Dockerfile help the user get information about the docker image that is being built. These labels can also be inspected when a docker image is pulled from docker hub or DTR.
 
-In order to inspect a Docker label from a Docker image we run the following command 
+In order to inspect a Docker label from a Docker image we run the following command
 
 The Generic command is as follows:
 ```
