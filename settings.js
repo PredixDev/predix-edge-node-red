@@ -204,7 +204,8 @@ module.exports = {
     //    context.global.os
 
     functionGlobalContext: {
-        // os:require('os'),
+        os:require('os'),
+        process:process
         // jfive:require("johnny-five"),
         // j5board:require("johnny-five").Board({repl:false})
     },
