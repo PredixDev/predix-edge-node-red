@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cp /config/flows.json /data/
-npm start
+cp ./settings.js /config
+npm start -- --userDir /config
