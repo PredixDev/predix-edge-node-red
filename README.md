@@ -2,8 +2,10 @@
 
 see https://nodered.org/docs/platforms/docker
 
-Predix Edge node-red projects require a config/settings.js
-Your existing flows.json may also be in /config and will get picked up when running in Predix Edge
+Predix Edge node-red projects require a data/settings.js
+Your existing flows.json may also be in /data and will get picked up when running in Predix Edge
+
+The entry_point.sh script copies /config/settings.js and /config/flows.json to /data.  This is allow Edge Manager configs to contain these files for different use-cases you might have.
 
 When using this container in multi-module project, each project can have different settings.js or flows.json simply by creating different Predix Edge config.zip files and deploying via Edge Manager or PETC.  See the [Predix Edge Reference App](https://www.predix.io/resources/tutorials/journey.html#2593) for details.
 
