@@ -2,11 +2,12 @@ version: "3.0"
 
 services:
   predix-edge-node-red:
-    image: "predixadoption/predix-edge-node-red:latest"
+    image: "predixadoption/predix-edge-node-red:18"
     networks:
       - predix-edge-broker_net
     ports:
       - 1880:1880
+    #entrypoint: ["sh", "-c", "sleep 500000"]
 networks:
   predix-edge-broker_net:
     external: true
