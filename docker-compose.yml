@@ -2,7 +2,7 @@ version: "3.0"
 
 services:
   predix-edge-node-red:
-    image: "predixadoption/predix-edge-node-red:18"
+    image: "predixadoption/predix-edge-node-red:1.0.19"
     networks:
       - predix-edge-broker_net
     ports:
